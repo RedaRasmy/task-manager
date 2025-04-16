@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit"
 
-import * as reducer from "./slices"
+import slices from "./slices"
 
 export const store = configureStore({
-    reducer,
+    reducer: slices,
 })
 
 export type AppStore = typeof store

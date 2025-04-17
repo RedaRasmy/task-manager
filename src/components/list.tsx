@@ -15,13 +15,11 @@ export default function List({ list }: { list: List }) {
     return (
         <div
             onClick={handleClick}
-            className="border m-1 px-1 py-2 rounded-md flex items-center cursor-pointer"
+            className="border m-1 px-1 py-1 rounded-md items-center grid grid-cols-[40px_auto_30px] cursor-pointer"
         >
-            <ListIcon className="w-1/2 " />
-            <p className="truncate w-3/2">{list.name}</p>
-            {/* <div className="flex gap-5 ">
-            </div> */}
-            <Trash className="w-1/5" color="red" onClick={deleteList} />
+            <ListIcon />
+            <p className="truncate ">{list.name}</p>
+            <Trash size={20} color="red" onClick={deleteList} />
         </div>
     )
 }

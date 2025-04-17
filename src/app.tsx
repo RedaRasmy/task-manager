@@ -23,7 +23,7 @@ export default function App() {
                 minSize={20}
                 maxSize={50}
                 className={cn("", {
-                    "hidden md:flex": currentList !== undefined,
+                    "hidden md:block": currentList !== undefined,
                 })}
             >
                 <Sidebar />

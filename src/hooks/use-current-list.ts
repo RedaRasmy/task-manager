@@ -1,7 +1,7 @@
-import type { CurrentList } from "@/redux/slices/current-list"
+import type { CurrentList } from "@/redux/slices/current-list-slice"
 
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
-import { currentListActions as actions } from "@/redux/slices/current-list"
+import { currentListActions as actions } from "@/redux/slices/current-list-slice"
 
 export default function useCurrentList() {
     const dispatch = useAppDispatch()

@@ -1,9 +1,9 @@
-import { randomUUID } from "node:crypto"
+import { v4 as uuid } from "uuid"
 
 import type { List } from "@/redux/types"
 
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
-import { listsActions as actions, listSelector } from "@/redux/slices/lists"
+import { listsActions as actions, listSelector } from "@/redux/slices/lists-slice"
 
 export default function useList(listId: List["id"]) {
     const dispatch = useAppDispatch()
@@ -21,7 +21,7 @@ export default function useList(listId: List["id"]) {
     }
 
     function createTask(name: List["name"]) {
-        const id = randomUUID()
+        const id = uuid()
         dispatch(actions.addList({ id, name, tasks: [] }))
     }
 

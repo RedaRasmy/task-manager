@@ -4,42 +4,40 @@ import {
     ResizablePanelGroup,
 } from "@/components/ui/resizable"
 
+import Sidebar from "./components/sidebar"
+import TasksSection from "./components/tasks-section"
 import useCurrentList from "./hooks/use-current-list"
 import { cn } from "./lib/utils"
 
 export default function App() {
     const { currentList } = useCurrentList()
-    console.log(currentList)
+    // console.log(currentList)
 
     return (
         <ResizablePanelGroup
             direction="horizontal"
-            className="min-h-screen rounded-lg border "
+            className=" rounded-lg border "
         >
             <ResizablePanel
-                defaultSize={30}
+                defaultSize={20}
                 minSize={20}
                 maxSize={50}
-                className={cn({
+                className={cn("", {
                     "hidden md:flex": currentList !== undefined,
                 })}
             >
-                <div className="flex h-full items-center justify-center p-6">
-                    <span className="font-semibold">One</span>
-                </div>
+                <Sidebar />
             </ResizablePanel>
             <ResizableHandle />
             <ResizablePanel
-                defaultSize={40}
+                defaultSize={50}
                 minSize={30}
                 maxSize={50}
-                className={cn({
+                className={cn("", {
                     "hidden md:flex": currentList === undefined,
                 })}
             >
-                <div className="flex h-full items-center justify-center p-6">
-                    <span className="font-semibold">Two</span>
-                </div>
+                <TasksSection />
             </ResizablePanel>
             <ResizableHandle />
             <ResizablePanel

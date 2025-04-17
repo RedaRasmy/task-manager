@@ -1,5 +1,6 @@
 import type { PayloadAction } from "@reduxjs/toolkit"
 
+import { arrayMove } from "@dnd-kit/sortable"
 import { createSlice } from "@reduxjs/toolkit"
 
 import type { RootState } from "../store"
@@ -15,20 +16,25 @@ const listsSlice = createSlice({
             state.push(list)
         },
         removeList(state, { payload: id }: PayloadAction<List["id"]>) {
-            state = state.filter(list => list.id !== id)
+            return state.filter(list => list.id !== id)
         },
         updateList(state, { payload }: PayloadAction<UpdatePayload<List>>) {
-            state = state.map((list) => {
+            return state.map((list) => {
                 if (list.id === payload.id) {
                     return {
                         ...list,
                         ...payload,
+
                     }
                 }
                 else {
                     return list
                 }
             })
+        },
+        swap(state, { payload: { oldIndex, newIndex } }: PayloadAction<{ oldIndex: number, newIndex: number }>) {
+            return arrayMove(state, oldIndex, newIndex)
+            // console.log(state)
         },
     },
 })

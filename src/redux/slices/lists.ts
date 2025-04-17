@@ -2,7 +2,8 @@ import type { PayloadAction } from "@reduxjs/toolkit"
 
 import { createSlice } from "@reduxjs/toolkit"
 
-import type { List, UpdatePayload } from "../types"
+import type { RootState } from "../store"
+import type { List, Task, UpdatePayload } from "../types"
 
 const initialState: List[] = []
 
@@ -35,3 +36,6 @@ const listsSlice = createSlice({
 export const listsActions = listsSlice.actions
 
 export default listsSlice.reducer
+
+export const listSelector = (id: List["id"]) => (state: RootState) => state.lists.find(list => list.id === id)
+export const taskSelector = (id: Task["id"]) => (state: RootState) => state.lists.find(list => !!list.tasks.find(task => task.id === id))?.tasks.find(task => task.id === id)

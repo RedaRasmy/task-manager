@@ -4,14 +4,14 @@ import { createSlice } from "@reduxjs/toolkit"
 
 import type { List } from "../types"
 
-export type CurrentList = undefined | List["id"]
+export type CurrentList = undefined | List
 
 type CurrentListSlice = {
-    currentList: CurrentList
+    data: CurrentList
 }
 
 const initialState: CurrentListSlice = {
-    currentList: undefined,
+    data: undefined,
 }
 
 const currentListSlice = createSlice({
@@ -19,7 +19,7 @@ const currentListSlice = createSlice({
     initialState,
     reducers: {
         change(state, { payload }: PayloadAction<CurrentList>) {
-            state.currentList = payload
+            state.data = payload
         },
     },
 })

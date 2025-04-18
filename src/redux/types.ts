@@ -31,3 +31,10 @@ export type UpdatePayload<T extends List | Task> = RequiredId<T>
 export type AddPayload<T extends List | Task> = T extends List
     ? List
     : { listId: List["id"], task: Task }
+
+export type SwapParams = { oldIndex: number, newIndex: number }
+
+export type TasksSwapParams = {
+    listId: List["id"]
+    params: SwapParams
+}

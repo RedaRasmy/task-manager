@@ -4,7 +4,7 @@ import { arrayMove } from "@dnd-kit/sortable"
 import { createSlice } from "@reduxjs/toolkit"
 
 import type { RootState } from "../store"
-import type { List, Task, UpdatePayload } from "../types"
+import type { List, SwapParams, Task, TasksSwapParams, UpdatePayload } from "../types"
 
 const initialState: List[] = []
 
@@ -13,7 +13,7 @@ const listsSlice = createSlice({
     initialState,
     reducers: {
         addList(state, { payload: list }: PayloadAction<List>) {
-            state.push(list)
+            state.unshift(list)
         },
         removeList(state, { payload: id }: PayloadAction<List["id"]>) {
             return state.filter(list => list.id !== id)
@@ -24,7 +24,6 @@ const listsSlice = createSlice({
                     return {
                         ...list,
                         ...payload,
-
                     }
                 }
                 else {
@@ -32,10 +31,27 @@ const listsSlice = createSlice({
                 }
             })
         },
-        swap(state, { payload: { oldIndex, newIndex } }: PayloadAction<{ oldIndex: number, newIndex: number }>) {
+        swap(state, { payload: { oldIndex, newIndex } }: PayloadAction<SwapParams>) {
             return arrayMove(state, oldIndex, newIndex)
-            // console.log(state)
         },
+        swapTasks(state, { payload: { listId, params: { oldIndex, newIndex } } }: PayloadAction<TasksSwapParams>) {
+            return state.map((list) => {
+                if (list.id === listId) {
+                    return { ...list, tasks: arrayMove(list.tasks, oldIndex, newIndex) }
+                }
+                else {
+                    return list
+                }
+            })
+        },
+        addTask(state, { payload: { listId, task } }: PayloadAction<{ listId: List["id"], task: Task }>) {
+            state.forEach((list) => {
+                if (list.id === listId) {
+                    list.tasks.unshift(task)
+                }
+            })
+        },
+
     },
 })
 

@@ -10,7 +10,7 @@ export default function List({ list }: { list: List }) {
     const { change } = useCurrentList()
 
     function handleClick() {
-        change(list.id)
+        change(list)
     }
     return (
         <div

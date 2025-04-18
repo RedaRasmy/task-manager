@@ -3,11 +3,17 @@ import type { Prettify } from "@/lib/utils"
 export type List = {
     id: string
     name: string
+}
+
+export type FullList = {
+    id: string
+    name: string
     tasks: Task[]
 }
 
 export type Task = {
     id: string
+    listId: List["id"]
     name: string
     description: string
     priority: Priority

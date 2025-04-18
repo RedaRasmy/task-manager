@@ -6,7 +6,7 @@ import useCurrentList from "@/hooks/use-current-list"
 import useList from "@/hooks/use-list"
 
 export default function List({ list }: { list: List }) {
-    const { deleteList } = useList(list.id)
+    const { remove } = useList(list.id)
     const { change } = useCurrentList()
 
     function handleClick() {
@@ -18,8 +18,8 @@ export default function List({ list }: { list: List }) {
             className="border m-1 px-1 py-1 rounded-md items-center grid grid-cols-[40px_auto_30px] cursor-pointer"
         >
             <ListIcon />
-            <p className="truncate ">{list.name}</p>
-            <Trash size={20} color="red" onClick={deleteList} />
+            <p className="truncate">{list.name}</p>
+            <Trash size={20} color="red" onClick={remove} />
         </div>
     )
 }

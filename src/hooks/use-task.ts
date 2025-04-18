@@ -1,36 +1,30 @@
-// import { useAppDispatch, useAppSelector } from "@/redux/hooks"
-// import { listsActions as actions, listSelector } from "@/redux/slices/lists"
-// import {  Task } from "@/redux/types"
-// import { randomUUID } from "crypto"
+import type { Task } from "@/redux/types"
 
-// export default function useTask(taskId:Task['id']) {
-//     const dispatch = useAppDispatch()
-//     const list = useAppSelector(listSelector(listId))
+import { useAppDispatch, useAppSelector } from "@/redux/hooks"
+import { tasksActions as actions, selectTaskById } from "@/redux/slices/tasks-slice"
 
-//     if (!list) throw new Error('List Undefined')
+export default function useTask(taskId: Task["id"]) {
+    const dispatch = useAppDispatch()
+    const task = useAppSelector(state => selectTaskById(state, taskId))
 
-//     function deleteTask() {
-//         dispatch(actions.removeList(listId))
-//     }
+    if (!task)
+        throw new Error("Task Undefined")
 
-//     function createTask(name:List['name']) {
-//         const id = randomUUID()
-//         dispatch(actions.addList({id,name,tasks:[]}))
-//     }
+    function deleteTask() {
+        dispatch(actions.remove(taskId))
+    }
 
-//     function deleteTask(id:List['id']) {
-//         dispatch(actions.updateList({id:listId,tasks:list?.tasks.filter(task=>task.id!==id)}))
-//     }
+    // function rename(newName: Task["name"]) {
+    //     dispatch(actions.updateList({ id: listId, name: newName }))
+    // }
 
-//     function renameList(newName:List['name']) {
-//         dispatch(actions.updateList({id:listId,name:newName}))
-//     }
+    function toggle() {
+        dispatch(actions.update({ id: taskId, completed: !task?.completed }))
+    }
 
-//     return {
-//         list,
-//         deleteList,
-//         renameList,
-//         createTask,
-//         deleteTask,
-//     }
-// }
+    return {
+        task,
+        toggle,
+        deleteTask,
+    }
+}

@@ -3,24 +3,24 @@ import { v4 as uuid } from "uuid"
 import type { List } from "@/redux/types"
 
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
-import { listsActions as actions } from "@/redux/slices/lists-slice"
+import { listsActions as actions, selectAllLists } from "@/redux/slices/lists-slice"
 
 export default function useLists() {
     const dispatch = useAppDispatch()
-    const lists = useAppSelector(state => state.lists)
+    const lists = useAppSelector(state => selectAllLists(state))
 
     function createList(name: List["name"]) {
         const id = uuid()
-        dispatch(actions.addList({ id, name, tasks: [] }))
+        dispatch(actions.add({ id, name }))
         return id
     }
 
-    function deleteList(id: List["id"]) {
-        dispatch(actions.removeList(id))
+    function remove(id: List["id"]) {
+        dispatch(actions.remove(id))
     }
 
-    function renameList(id: List["id"], newName: List["name"]) {
-        dispatch(actions.updateList({ id, name: newName }))
+    function rename(id: List["id"], newName: List["name"]) {
+        dispatch(actions.update({ id, name: newName }))
     }
 
     function swap({ oldIndex, newIndex }: { oldIndex: number, newIndex: number }) {
@@ -30,8 +30,8 @@ export default function useLists() {
     return {
         lists,
         createList,
-        deleteList,
-        renameList,
+        remove,
+        rename,
         swap,
     }
 }

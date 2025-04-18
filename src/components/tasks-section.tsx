@@ -17,7 +17,7 @@ export default function TasksSection() {
     if (currentList) {
         return (
             <div className="px-4 py-6">
-                <div className="h-1/6 flex justify-between items-center">
+                <div className="flex justify-between items-center">
                     <div className="flex gap-3 items-center">
                         <ArrowLeft color="grey" onClick={handleBack} />
                         <h1 className="font-bold text-xl capitalize">{currentList.name}</h1>
@@ -26,7 +26,7 @@ export default function TasksSection() {
                         <Ellipsis color="grey" />
                     </div>
                 </div>
-                <div className="flex flex-col gap-3 mt-5">
+                <div className="flex flex-col gap-3 mt-5 ">
                     <AddTask listId={currentList.id} />
                     <Tasks listId={currentList.id} />
                 </div>

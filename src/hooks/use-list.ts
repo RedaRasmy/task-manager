@@ -6,21 +6,22 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { listsActions, selectListById } from "@/redux/slices/lists-slice"
 import { tasksActions } from "@/redux/slices/tasks-slice"
 import { selectTasksByListId } from "@/redux/tasks-selector"
-// import useCurrentList from "./use-current-list"
+
+import useCurrentList from "./use-current-list"
 
 export default function useList(listId: List["id"]) {
     const dispatch = useAppDispatch()
     const list = useAppSelector(state => selectListById(state, listId))
     const tasks = useAppSelector(state => selectTasksByListId(state, listId))
-    // const {currentList,change} = useCurrentList()
+    const { currentList, change } = useCurrentList()
 
     if (!list)
         throw new Error("List Undefined")
 
     function remove() {
-        // if (currentList?.id === listId) {
-        //     change(undefined)
-        // }
+        if (currentList?.id === listId) {
+            change(undefined)
+        }
         dispatch(listsActions.remove(listId))
     }
 

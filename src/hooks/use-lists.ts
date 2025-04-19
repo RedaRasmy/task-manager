@@ -20,7 +20,7 @@ export default function useLists() {
     }
 
     function rename(id: List["id"], newName: List["name"]) {
-        dispatch(actions.update({ id, name: newName }))
+        dispatch(actions.update({ id, changes: { name: newName } }))
     }
 
     function swap({ oldIndex, newIndex }: SwapParams) {

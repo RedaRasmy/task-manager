@@ -1,3 +1,5 @@
+import type { MouseEvent } from "react"
+
 import { List as ListIcon, Trash } from "lucide-react"
 
 import type { List } from "@/redux/types"
@@ -12,6 +14,12 @@ export default function List({ list }: { list: List }) {
     function handleClick() {
         change(list)
     }
+
+    function handleDelete(e: MouseEvent<SVGSVGElement>) {
+        e.stopPropagation()
+        remove()
+    }
+
     return (
         <div
             onClick={handleClick}
@@ -19,7 +27,7 @@ export default function List({ list }: { list: List }) {
         >
             <ListIcon />
             <p className="truncate">{list.name}</p>
-            <Trash size={20} color="red" onClick={remove} />
+            <Trash size={20} color="red" onClick={handleDelete} />
         </div>
     )
 }

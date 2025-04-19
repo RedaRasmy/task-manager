@@ -10,21 +10,27 @@ export default function useTask(taskId: Task["id"]) {
     if (!task)
         throw new Error("Task Undefined")
 
-    function deleteTask() {
-        dispatch(actions.remove(taskId))
+    function remove() {
+        dispatch(actions.remove(task))
     }
 
-    // function rename(newName: Task["name"]) {
-    //     dispatch(actions.updateList({ id: listId, name: newName }))
-    // }
+    function rename(newName: Task["name"]) {
+        dispatch(actions.update({ id: taskId, changes: { name: newName } }))
+    }
 
     function toggle() {
-        dispatch(actions.update({ id: taskId, completed: !task?.completed }))
+        dispatch(actions.update({ id: taskId, changes: { completed: !task.completed } }))
+    }
+
+    function update(changes: Partial<Task>) {
+        dispatch(actions.update({ id: taskId, changes }))
     }
 
     return {
         task,
         toggle,
-        deleteTask,
+        remove,
+        rename,
+        update,
     }
 }

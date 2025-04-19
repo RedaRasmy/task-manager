@@ -1,6 +1,6 @@
 import { v4 as uuid } from "uuid"
 
-import type { List } from "@/redux/types"
+import type { List, SwapParams } from "@/redux/types"
 
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { listsActions as actions, selectAllLists } from "@/redux/slices/lists-slice"
@@ -11,7 +11,7 @@ export default function useLists() {
 
     function createList(name: List["name"]) {
         const id = uuid()
-        dispatch(actions.add({ id, name }))
+        dispatch(actions.add({ id, name, tasksIds: [] }))
         return id
     }
 
@@ -23,8 +23,8 @@ export default function useLists() {
         dispatch(actions.update({ id, name: newName }))
     }
 
-    function swap({ oldIndex, newIndex }: { oldIndex: number, newIndex: number }) {
-        dispatch(actions.swap({ oldIndex, newIndex }))
+    function swap({ oldIndex, newIndex }: SwapParams) {
+        dispatch(actions.swapLists({ oldIndex, newIndex }))
     }
 
     return {

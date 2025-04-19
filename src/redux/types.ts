@@ -3,6 +3,7 @@ import type { Prettify } from "@/lib/utils"
 export type List = {
     id: string
     name: string
+    tasksIds: Task["id"][]
 }
 
 export type FullList = {

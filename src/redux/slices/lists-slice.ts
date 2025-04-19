@@ -4,13 +4,13 @@ import { arrayMove } from "@dnd-kit/sortable"
 import { createEntityAdapter, createSlice } from "@reduxjs/toolkit"
 
 import type { RootState } from "../store"
-import type { List, SwapParams, UpdatePayload } from "../types"
+import type { List, SwapParams, TasksSwapParams } from "../types"
+
+import { tasksActions } from "./tasks-slice"
 
 const listsAdapter = createEntityAdapter({
     selectId: (list: List) => list.id,
 })
-
-// const initialState: List[] = []
 
 const listsSlice = createSlice({
     name: "lists",
@@ -21,24 +21,28 @@ const listsSlice = createSlice({
             state.ids.unshift(list.id)
         },
         remove: listsAdapter.removeOne,
-
-        update(state, { payload: list }: PayloadAction<UpdatePayload<List>>) {
-            if (!state.entities[list.id])
-                return
-            state.entities[list.id] = Object.assign(
-                {},
-                state.entities[list.id],
-                Object.fromEntries(Object.entries(list).filter(([_, v]) => v !== undefined)),
-            )
-        },
-        swap(state, { payload: { oldIndex, newIndex } }: PayloadAction<SwapParams>) {
+        update: listsAdapter.updateOne,
+        swapLists(state, { payload: { oldIndex, newIndex } }: PayloadAction<SwapParams>) {
             state.ids = arrayMove(state.ids, oldIndex, newIndex)
         },
+        swapTasks(state, action: PayloadAction<TasksSwapParams>) {
+            const { listId, params: { oldIndex, newIndex } } = action.payload
+            const tasksIds = state.entities[listId].tasksIds
+            state.entities[listId].tasksIds = arrayMove(tasksIds, oldIndex, newIndex)
+        },
     },
-    // extraReducers(builder) {
-    //     builder
-    //         .addCase()
-    // }
+    extraReducers(builder) {
+        builder
+            .addCase(tasksActions.add, (state, action) => {
+                const task = action.payload
+                state.entities[task.listId].tasksIds.unshift(task.id)
+            })
+            .addCase(tasksActions.remove, (state, action) => {
+                const task = action.payload
+                const tasksIds = state.entities[task.listId].tasksIds
+                state.entities[task.listId].tasksIds = tasksIds.filter(id => id !== task.id)
+            })
+    },
 })
 
 export const listsActions = listsSlice.actions
@@ -47,7 +51,7 @@ export default listsSlice.reducer
 
 // Selectors
 
-const listsSelectors = listsAdapter.getSelectors<RootState>(state => state.lists)
+export const listsSelectors = listsAdapter.getSelectors<RootState>(state => state.lists)
 
 export const selectAllLists = listsSelectors.selectAll
 export const selectListById = listsSelectors.selectById

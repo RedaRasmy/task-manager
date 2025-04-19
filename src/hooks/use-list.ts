@@ -4,7 +4,8 @@ import type { List, SwapParams, Task } from "@/redux/types"
 
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { listsActions, selectListById } from "@/redux/slices/lists-slice"
-import { selectTasksByListId, tasksActions } from "@/redux/slices/tasks-slice"
+import { tasksActions } from "@/redux/slices/tasks-slice"
+import { selectTasksByListId } from "@/redux/tasks-selector"
 // import useCurrentList from "./use-current-list"
 
 export default function useList(listId: List["id"]) {
@@ -24,7 +25,11 @@ export default function useList(listId: List["id"]) {
     }
 
     function rename(newName: List["name"]) {
-        dispatch(listsActions.update({ id: listId, name: newName }))
+        dispatch(listsActions.update({ id: listId, changes: { name: newName } }))
+    }
+
+    function update(changes: Partial<List>) {
+        dispatch(listsActions.update({ id: listId, changes }))
     }
 
     function createTask(name: Task["name"]) {
@@ -41,14 +46,16 @@ export default function useList(listId: List["id"]) {
     }
 
     function swap(params: SwapParams) {
-        dispatch(tasksActions.swap(params))
+        dispatch(listsActions.swapTasks({ listId, params }))
     }
 
     return {
-        list: { ...list, tasks },
+        list,
+        tasks,
         remove,
         rename,
         createTask,
         swap,
+        update,
     }
 }

@@ -21,7 +21,7 @@ import { SortableItem } from "./sortable-item"
 import Task from "./task"
 
 export default function Tasks({ listId }: { listId: List["id"] }) {
-    const { list: { tasks }, swap } = useList(listId)
+    const { tasks, swap } = useList(listId)
 
     const sensors = useSensors(
         useSensor(MouseSensor, {

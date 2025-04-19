@@ -12,7 +12,7 @@ export default function List({ list }: { list: List }) {
     const { change } = useCurrentList()
 
     function handleClick() {
-        change(list)
+        change(list.id)
     }
 
     function handleDelete(e: MouseEvent<SVGSVGElement>) {

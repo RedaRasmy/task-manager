@@ -4,13 +4,14 @@ import {
     ResizablePanelGroup,
 } from "@/components/ui/resizable"
 
+import ListSection from "./components/list-section"
 import Sidebar from "./components/sidebar"
-import TasksSection from "./components/tasks-section"
+import ThirdColumn from "./components/third-column"
 import useCurrentList from "./hooks/use-current-list"
 import { cn } from "./lib/utils"
 
 export default function App() {
-    const { currentList } = useCurrentList()
+    const { currentListId } = useCurrentList()
 
     return (
         <ResizablePanelGroup
@@ -22,7 +23,7 @@ export default function App() {
                 minSize={20}
                 maxSize={50}
                 className={cn("", {
-                    "hidden md:block": currentList !== undefined,
+                    "hidden md:block": currentListId !== undefined,
                 })}
             >
                 <Sidebar />
@@ -33,10 +34,10 @@ export default function App() {
                 minSize={30}
                 maxSize={50}
                 className={cn("", {
-                    "hidden md:flex": currentList === undefined,
+                    "hidden md:flex": currentListId === undefined,
                 })}
             >
-                <TasksSection />
+                <ListSection />
             </ResizablePanel>
             <ResizableHandle />
             <ResizablePanel
@@ -45,9 +46,7 @@ export default function App() {
                 maxSize={50}
                 className="hidden lg:flex"
             >
-                <div className="flex h-full items-center justify-center p-6">
-                    <span className="font-semibold">Three</span>
-                </div>
+                <ThirdColumn />
             </ResizablePanel>
         </ResizablePanelGroup>
     )

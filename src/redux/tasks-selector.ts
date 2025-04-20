@@ -11,3 +11,21 @@ export const selectTasksByListId = createSelector(
         return list.tasksIds.map(id => tasks[id])
     },
 )
+
+export const selectInProgressTasks = createSelector(
+    [selectListById, selectTasksEntities],
+    (list, tasks) => {
+        if (!list)
+            return []
+        return list.tasksIds.map(id => tasks[id]).filter(task => !task.completed)
+    },
+)
+
+export const selectCompletedTasks = createSelector(
+    [selectListById, selectTasksEntities],
+    (list, tasks) => {
+        if (!list)
+            return []
+        return list.tasksIds.map(id => tasks[id]).filter(task => task.completed)
+    },
+)

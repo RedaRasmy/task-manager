@@ -30,6 +30,9 @@ const listsSlice = createSlice({
             const tasksIds = state.entities[listId].tasksIds
             state.entities[listId].tasksIds = arrayMove(tasksIds, oldIndex, newIndex)
         },
+        // toEnd(state,action:PayloadAction<Task['id']>) {
+
+        // }
     },
     extraReducers(builder) {
         builder
@@ -41,6 +44,22 @@ const listsSlice = createSlice({
                 const task = action.payload
                 const tasksIds = state.entities[task.listId].tasksIds
                 state.entities[task.listId].tasksIds = tasksIds.filter(id => id !== task.id)
+            })
+            .addCase(tasksActions.update, (state, action) => {
+                const { id: taskId, changes: { completed, listId } } = action.payload
+
+                if (completed !== undefined && listId !== undefined) {
+                    const list = state.entities[listId]
+                    if (!list)
+                        return
+                    const index = list.tasksIds.indexOf(taskId)
+                    if (completed) {
+                        list.tasksIds = [...list.tasksIds.slice(0, index), ...list.tasksIds.slice(index + 1), taskId]
+                    }
+                    else {
+                        list.tasksIds = [taskId, ...list.tasksIds.slice(0, index), ...list.tasksIds.slice(index + 1)]
+                    }
+                }
             })
     },
 })

@@ -18,6 +18,11 @@ export default function Task({ task }: { task: TaskType }) {
         remove()
     }
 
+    function handleToggle(e: MouseEvent) {
+        e.stopPropagation()
+        toggle()
+    }
+
     return (
         <div
             className="bg-gray-100 px-4 py-2 grid grid-cols-[30px_auto_20px] items-center my-1 rounded-md cursor-pointer"
@@ -25,7 +30,7 @@ export default function Task({ task }: { task: TaskType }) {
         >
             <Checkbox
                 checked={task.completed}
-                onClick={toggle}
+                onClick={handleToggle}
                 className="cursor-pointer"
             />
             <p className="truncate">{task.name}</p>

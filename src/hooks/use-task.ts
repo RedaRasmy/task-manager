@@ -25,7 +25,10 @@ export default function useTask(taskId: Task["id"]) {
     }
 
     function toggle() {
-        dispatch(actions.update({ id: taskId, changes: { completed: !task.completed } }))
+        dispatch(actions.update({ id: taskId, changes: {
+            completed: !task.completed,
+            listId: task.listId,
+        } }))
     }
 
     function update(changes: Partial<Task>) {

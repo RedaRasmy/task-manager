@@ -13,13 +13,13 @@ export default function useList(listId: List["id"]) {
     const dispatch = useAppDispatch()
     const list = useAppSelector(state => selectListById(state, listId))
     const tasks = useAppSelector(state => selectTasksByListId(state, listId))
-    const { currentList, change } = useCurrentList()
+    const { currentListId, change } = useCurrentList()
 
     if (!list)
         throw new Error("List Undefined")
 
     function remove() {
-        if (currentList?.id === listId) {
+        if (currentListId === listId) {
             change(undefined)
         }
         dispatch(listsActions.remove(listId))

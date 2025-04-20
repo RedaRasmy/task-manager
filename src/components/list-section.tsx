@@ -2,6 +2,7 @@ import useCurrentList from "@/hooks/use-current-list"
 
 import AddTask from "./add-task"
 import ListHeader from "./list-header"
+import TaskSectionContainer from "./task-section-container"
 import Tasks from "./tasks"
 
 export default function ListSection() {
@@ -14,6 +15,7 @@ export default function ListSection() {
                 <div className="flex flex-col gap-3 mt-5 h-full ">
                     <AddTask listId={currentListId} />
                     <Tasks listId={currentListId} />
+                    <TaskSectionContainer />
                 </div>
             </div>
         )

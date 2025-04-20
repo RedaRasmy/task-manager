@@ -58,7 +58,7 @@ export default function Tasks({ listId }: { listId: List["id"] }) {
     return (
         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
             <SortableContext items={tasks} strategy={verticalListSortingStrategy}>
-                <div className=" overflow-y-auto h-fit flex flex-col w-full">
+                <div className=" overflow-y-auto h-fit flex flex-col w-full flex-1">
                     {tasks.map(task => (
                         <SortableItem id={task.id} key={task.id}>
                             <Task key={task.id} task={task} />

@@ -14,8 +14,8 @@ export default function ListHeader({ listId }: { listId: List["id"] }) {
     return (
         <div className="flex justify-between items-center ">
             <div className="flex gap-3 items-center">
-                <ArrowLeft color="grey" onClick={reset} className="cursor-pointer" />
-                <h1 className="font-bold text-xl capitalize">{list.name}</h1>
+                <ArrowLeft color="grey" onClick={reset} className="cursor-pointer md:hidden" />
+                <h1 className="font-bold text-xl capitalize md:ml-3">{list.name}</h1>
             </div>
             <div className="flex items-center gap-3">
                 <Ellipsis color="grey" className="cursor-pointer" />

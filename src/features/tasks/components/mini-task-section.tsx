@@ -10,7 +10,7 @@ import TaskHeader from "./task-header"
 export default function MiniTaskSection({ taskId }: {
     taskId: Task["id"]
 }) {
-    const { task, update } = useTask(taskId)
+    const { task, update, rename } = useTask(taskId)
 
     function handleChange(e: ChangeEvent<HTMLTextAreaElement>) {
         update({ description: e.target.value })
@@ -20,7 +20,7 @@ export default function MiniTaskSection({ taskId }: {
         <div
             className="lg:hidden h-[40%] border-t py-4 px-3"
         >
-            <TaskHeader name={task.name} />
+            <TaskHeader name={task.name} rename={rename} />
             <TaskDescription description={task.description} onChange={handleChange} />
         </div>
     )

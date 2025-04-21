@@ -2,6 +2,7 @@ import { v4 as uuid } from "uuid"
 
 import type { List, SwapParams, Task } from "@/redux/types"
 
+import useCurrentTask from "@/features/tasks/hooks/use-current-task"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { listsActions, selectListById } from "@/redux/slices/lists-slice"
 import { tasksActions } from "@/redux/slices/tasks-slice"
@@ -14,6 +15,7 @@ export default function useList(listId: List["id"]) {
     const list = useAppSelector(state => selectListById(state, listId))
     const tasks = useAppSelector(state => selectTasksByListId(state, listId))
     const { currentListId, change } = useCurrentList()
+    const { currentTaskId, change: changeTask } = useCurrentTask()
 
     if (!list)
         throw new Error("List Undefined")
@@ -21,6 +23,9 @@ export default function useList(listId: List["id"]) {
     function remove() {
         if (currentListId === listId) {
             change(undefined)
+        }
+        if (currentTaskId && list.tasksIds.includes(currentTaskId)) {
+            changeTask(undefined)
         }
         dispatch(listsActions.remove(listId))
     }

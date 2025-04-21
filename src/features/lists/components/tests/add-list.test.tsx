@@ -1,8 +1,8 @@
-import { render, screen } from "@testing-library/react"
+import { cleanup, render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import "@testing-library/jest-dom/vitest"
 import { Provider } from "react-redux"
-import { beforeAll, describe, expect, it } from "vitest"
+import { afterEach, beforeEach, describe, expect, it } from "vitest"
 
 import { store } from "@/redux/store"
 
@@ -10,13 +10,16 @@ import AddList from "../add-list"
 import Lists from "../lists"
 
 describe("addList Component", () => {
-    beforeAll(() => {
+    beforeEach(() => {
         render(
             <Provider store={store}>
                 <AddList />
                 <Lists />
             </Provider>,
         )
+    })
+    afterEach(() => {
+        cleanup()
     })
 
     it("should render add-list input", () => {

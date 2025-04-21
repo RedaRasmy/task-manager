@@ -21,7 +21,10 @@ export default function AddList() {
     }
 
     return (
-        <div className="flex w-full justify-center items-center gap-2">
+        <div
+            data-testid="add-list"
+            className="flex w-full justify-center items-center gap-2"
+        >
             <Input data-testid="add-list-input" maxLength={25} className="" placeholder="Enter list name..." onKeyDown={handleKeyDown} value={name} onChange={e => setName(e.target.value)} />
             <Plus className="cursor-pointer" onClick={handleCreateList} />
         </div>

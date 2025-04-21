@@ -18,7 +18,7 @@ export default function MiniTaskSection({ taskId }: {
 
     return (
         <div
-            className="lg:hidden h-[40%] border-t py-4 px-3"
+            className="lg:hidden h-[60%] border-t py-4 px-3"
         >
             <TaskHeader name={task.name} rename={rename} />
             <TaskDescription description={task.description} onChange={handleChange} />

@@ -2,8 +2,8 @@ import { ArrowLeft, Ellipsis } from "lucide-react"
 
 import type { List } from "@/redux/types"
 
-import useCurrentList from "@/hooks/use-current-list"
-import useList from "@/hooks/use-list"
+import useCurrentList from "@/features/lists/hooks/use-current-list"
+import useList from "@/features/lists/hooks/use-list"
 
 export default function ListHeader({ listId }: { listId: List["id"] }) {
     const { list } = useList(listId)

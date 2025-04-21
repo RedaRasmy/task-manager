@@ -1,4 +1,4 @@
-import useCurrentTask from "@/hooks/use-current-task"
+import useCurrentTask from "@/features/tasks/hooks/use-current-task"
 
 import MiniTaskSection from "./mini-task-section"
 

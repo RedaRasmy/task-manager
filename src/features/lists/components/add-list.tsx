@@ -3,9 +3,8 @@ import type { KeyboardEvent } from "react"
 import { Plus } from "lucide-react"
 import { useState } from "react"
 
-import useLists from "@/hooks/use-lists"
-
-import { Input } from "./ui/input"
+import { Input } from "@/components/ui/input"
+import useLists from "@/features/lists/hooks/use-lists"
 
 export default function AddList() {
     const [name, setName] = useState("")

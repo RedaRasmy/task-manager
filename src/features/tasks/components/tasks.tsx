@@ -13,13 +13,15 @@ import {
 } from "@dnd-kit/core"
 import { SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from "@dnd-kit/sortable"
 
-import useLists from "@/hooks/use-lists"
+import type { List } from "@/redux/types"
 
-import List from "./list"
-import { SortableItem } from "./sortable-item"
+import useList from "@/features/lists/hooks/use-list"
 
-export default function Lists() {
-    const { lists, swap } = useLists()
+import { SortableItem } from "../../../components/sortable-item"
+import Task from "./task"
+
+export default function Tasks({ listId }: { listId: List["id"] }) {
+    const { tasks, swap } = useList(listId)
 
     const sensors = useSensors(
         useSensor(MouseSensor, {
@@ -43,12 +45,11 @@ export default function Lists() {
     function handleDragEnd(event: DragEndEvent) {
         const { active, over } = event
         if (over && active.id !== over.id) {
-            const activeList = lists.find(list => active.id === list.id)
-            const distList = lists.find(list => over.id === list.id)
-
+            const activeList = tasks.find(list => active.id === list.id)
+            const distList = tasks.find(list => over.id === list.id)
             if (activeList && distList) {
-                const oldIndex = lists.indexOf(activeList)
-                const newIndex = lists.indexOf(distList)
+                const oldIndex = tasks.indexOf(activeList)
+                const newIndex = tasks.indexOf(distList)
                 swap({ oldIndex, newIndex })
             }
         }
@@ -56,11 +57,11 @@ export default function Lists() {
 
     return (
         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-            <SortableContext items={lists} strategy={verticalListSortingStrategy}>
-                <div className="overflow-y-auto flex flex-col  w-full">
-                    {lists.map(list => (
-                        <SortableItem id={list.id} key={list.id}>
-                            <List key={list.id} list={list} />
+            <SortableContext items={tasks} strategy={verticalListSortingStrategy}>
+                <div className=" overflow-y-auto h-fit flex flex-col w-full flex-1">
+                    {tasks.map(task => (
+                        <SortableItem id={task.id} key={task.id}>
+                            <Task key={task.id} task={task} />
                         </SortableItem>
                     ))}
                 </div>

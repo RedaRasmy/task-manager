@@ -1,6 +1,6 @@
-import useCurrentTask from "@/hooks/use-current-task"
+import useCurrentTask from "@/features/tasks/hooks/use-current-task"
 
-import TaskSection from "./task-section"
+import TaskSection from "../features/tasks/components/task-section"
 
 export default function ThirdColumn() {
     const { currentTaskId } = useCurrentTask()

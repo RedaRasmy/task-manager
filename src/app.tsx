@@ -4,10 +4,10 @@ import {
     ResizablePanelGroup,
 } from "@/components/ui/resizable"
 
-import ListSection from "./components/list-section"
 import Sidebar from "./components/sidebar"
 import ThirdColumn from "./components/third-column"
-import useCurrentList from "./hooks/use-current-list"
+import ListSection from "./features/lists/components/list-section"
+import useCurrentList from "./features/lists/hooks/use-current-list"
 import { cn } from "./lib/utils"
 
 export default function App() {

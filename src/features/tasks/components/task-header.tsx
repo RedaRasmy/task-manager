@@ -2,7 +2,7 @@ import { ChevronsDown } from "lucide-react"
 
 import type { Task } from "@/redux/types"
 
-import useCurrentTask from "@/hooks/use-current-task"
+import useCurrentTask from "@/features/tasks/hooks/use-current-task"
 
 export default function TaskHeader({ name }: { name: Task["name"] }) {
     const { reset } = useCurrentTask()

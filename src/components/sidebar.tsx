@@ -1,5 +1,6 @@
-import AddList from "./add-list"
-import Lists from "./lists"
+import AddList from "@/features/lists/components/add-list"
+
+import Lists from "../features/lists/components/lists"
 
 export default function Sidebar() {
     return (

@@ -4,10 +4,10 @@ import { X } from "lucide-react"
 
 import type { Task as TaskType } from "@/redux/types"
 
-import useCurrentTask from "@/hooks/use-current-task"
-import useTask from "@/hooks/use-task"
+import useCurrentTask from "@/features/tasks/hooks/use-current-task"
+import useTask from "@/features/tasks/hooks/use-task"
 
-import { Checkbox } from "./ui/checkbox"
+import { Checkbox } from "../../../components/ui/checkbox"
 
 export default function Task({ task }: { task: TaskType }) {
     const { toggle, remove } = useTask(task.id)

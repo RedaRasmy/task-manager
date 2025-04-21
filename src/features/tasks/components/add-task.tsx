@@ -4,9 +4,8 @@ import { useState } from "react"
 
 import type { List } from "@/redux/types"
 
-import useList from "@/hooks/use-list"
-
-import { Input } from "./ui/input"
+import { Input } from "@/components/ui/input"
+import useList from "@/features/lists/hooks/use-list"
 
 export default function AddTask({ listId }: { listId: List["id"] }) {
     const { createTask } = useList(listId)

@@ -12,6 +12,7 @@ export default function TaskDescription({ description, onChange }: {
             value={description}
             onChange={onChange}
             className="h-full w-full resize-none px-2 outline-none"
+            placeholder="Description..."
         >
         </textarea>
     )

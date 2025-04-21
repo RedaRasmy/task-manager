@@ -1,9 +1,9 @@
-import useCurrentList from "@/hooks/use-current-list"
+import useCurrentList from "@/features/lists/hooks/use-current-list"
+import AddTask from "@/features/tasks/components/add-task"
 
-import AddTask from "./add-task"
+import TaskSectionContainer from "../../tasks/components/task-section-container"
+import Tasks from "../../tasks/components/tasks"
 import ListHeader from "./list-header"
-import TaskSectionContainer from "./task-section-container"
-import Tasks from "./tasks"
 
 export default function ListSection() {
     const { currentListId } = useCurrentList()

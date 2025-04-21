@@ -57,7 +57,10 @@ export default function Lists() {
     return (
         <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
             <SortableContext items={lists} strategy={verticalListSortingStrategy}>
-                <div className="overflow-y-auto flex flex-col  w-full">
+                <div
+                    data-testid="lists"
+                    className="overflow-y-auto flex flex-col  w-full"
+                >
                     {lists.map(list => (
                         <SortableItem id={list.id} key={list.id}>
                             <List key={list.id} list={list} />

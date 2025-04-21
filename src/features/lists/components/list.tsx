@@ -22,6 +22,7 @@ export default function List({ list }: { list: List }) {
 
     return (
         <div
+            data-testid="list"
             onClick={handleClick}
             className="border m-1 px-1 py-1 rounded-md items-center grid grid-cols-[40px_auto_30px] cursor-pointer"
         >

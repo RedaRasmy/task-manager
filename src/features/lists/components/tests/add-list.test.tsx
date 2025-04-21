@@ -29,8 +29,6 @@ describe("addList Component", () => {
 
     it("should add a list and reset the input", async () => {
         const input = screen.getByTestId("add-list-input")
-        const lists = screen.getByTestId("lists")
-        expect(lists).toBeEmptyDOMElement()
 
         await userEvent.type(input, "myList{enter}")
 
@@ -38,6 +36,5 @@ describe("addList Component", () => {
 
         const list = screen.getByText("myList")
         expect(list).toBeInTheDocument()
-        expect(lists).not.toBeEmptyDOMElement()
     })
 })

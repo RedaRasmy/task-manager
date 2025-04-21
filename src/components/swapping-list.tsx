@@ -27,8 +27,6 @@ export default function SwappingList<Item extends { id: string | number }>({ ite
     onReorder: (swapParams: SwapParams) => void
     className?: string
 }) {
-    // const { tasks, swap } = useList(listId)
-
     const sensors = useSensors(
         useSensor(MouseSensor, {
             // Require the mouse to move by 10 pixels before activating
@@ -50,15 +48,15 @@ export default function SwappingList<Item extends { id: string | number }>({ ite
 
     function handleDragEnd(event: DragEndEvent) {
         const { active, over } = event
-        if (over && active.id !== over.id) {
-            const activeList = items.find(list => active.id === list.id)
-            const distList = items.find(list => over.id === list.id)
-            if (activeList && distList) {
-                const oldIndex = items.indexOf(activeList)
-                const newIndex = items.indexOf(distList)
-                onReorder({ oldIndex, newIndex })
-            }
-        }
+
+        if (!over || active.id === over.id)
+            return
+
+        const oldIndex = items.findIndex(item => item.id === active.id)
+        const newIndex = items.findIndex(item => item.id === over.id)
+
+        if (oldIndex !== 1 && newIndex !== -1)
+            onReorder({ oldIndex, newIndex })
     }
 
     return (

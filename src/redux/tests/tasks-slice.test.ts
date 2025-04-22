@@ -25,7 +25,7 @@ describe("tasks slice", () => {
 
     beforeEach(() => {
         // Create a list before each test
-        const list = { id: "listId", name: "My List", tasksIds: [] }
+        const list: List = { id: "listId", name: "My List", tasksIds: [], ascending: true, sortMode: "manual" }
         listState = listsReducer(initialState, listsActions.add(list))
     })
 

@@ -1,6 +1,6 @@
 import type { KeyboardEvent } from "react"
 
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useOnClickOutside } from "usehooks-ts"
 
 import { cn } from "@/lib/utils"
@@ -14,6 +14,11 @@ export default function RenamableHeading({ name, rename, className }: {
     const inputRef = useRef<HTMLInputElement>(null)
 
     const [current, setCurrent] = useState(name)
+
+    useEffect(() => {
+        // eslint-disable-next-line react-hooks-extra/no-direct-set-state-in-use-effect
+        setCurrent(name)
+    }, [name])
 
     useOnClickOutside(inputRef as React.RefObject<HTMLElement>, handleRename)
 

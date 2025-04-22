@@ -29,6 +29,7 @@ export default function Task({ task }: { task: TaskType }) {
             className={cn("bg-gray-100 px-4 py-2 grid grid-cols-[30px_auto_20px] items-center my-1 rounded-md cursor-pointer", {
                 "bg-yellow-300": task.priority === "high",
                 "bg-blue-400": task.priority === "medium",
+                "opacity-70 bg-black/50": task.completed,
             })}
             onClick={() => change(task.id)}
         >

@@ -6,14 +6,14 @@ import useCurrentTask from "@/features/tasks/hooks/use-current-task"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { listsActions, selectListById } from "@/redux/slices/lists-slice"
 import { tasksActions } from "@/redux/slices/tasks-slice"
-import { selectTasksByListId } from "@/redux/tasks-selector"
+import { selectSortedTasksForList } from "@/redux/tasks-selector"
 
 import useCurrentList from "./use-current-list"
 
 export default function useList(listId: List["id"]) {
     const dispatch = useAppDispatch()
     const list = useAppSelector(state => selectListById(state, listId))
-    const tasks = useAppSelector(state => selectTasksByListId(state, listId))
+    const tasks = useAppSelector(selectSortedTasksForList({ listId, sortMode: list.sortMode, ascending: list.ascending }))
     const { currentListId, change } = useCurrentList()
     const { currentTaskId, change: changeTask } = useCurrentTask()
 
@@ -54,6 +54,10 @@ export default function useList(listId: List["id"]) {
     function swap(params: SwapParams) {
         dispatch(listsActions.swapTasks({ listId, params }))
     }
+
+    // function removeAllTasks() {
+    //     dispatch(listsActions.)
+    // }
 
     return {
         list,

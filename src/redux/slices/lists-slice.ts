@@ -30,6 +30,7 @@ const listsSlice = createSlice({
             const tasksIds = state.entities[listId].tasksIds
             state.entities[listId].tasksIds = arrayMove(tasksIds, oldIndex, newIndex)
         },
+
     },
     extraReducers(builder) {
         builder

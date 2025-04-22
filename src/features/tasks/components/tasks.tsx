@@ -6,13 +6,22 @@ import useList from "@/features/lists/hooks/use-list"
 import Task from "./task"
 
 export default function Tasks({ listId }: { listId: List["id"] }) {
-    const { tasks, swap } = useList(listId)
+    const { tasks, swap, list } = useList(listId)
 
-    return (
-        <SwappingList
-            items={tasks}
-            renderItem={task => <Task task={task} />}
-            onReorder={swap}
-        />
-    )
+    if (list.sortMode === "manual") {
+        return (
+            <SwappingList
+                items={tasks}
+                renderItem={task => <Task task={task} />}
+                onReorder={swap}
+            />
+        )
+    }
+    else {
+        return (
+            <div className="overflow-y-auto flex flex-col w-full flex-1">
+                {tasks.map(task => <Task key={task.id} task={task} />)}
+            </div>
+        )
+    }
 }

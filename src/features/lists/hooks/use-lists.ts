@@ -11,7 +11,7 @@ export default function useLists() {
 
     function createList(name: List["name"]) {
         const id = uuid()
-        dispatch(actions.add({ id, name, tasksIds: [] }))
+        dispatch(actions.add({ id, name, tasksIds: [], ascending: true, sortMode: "manual" }))
         return id
     }
 

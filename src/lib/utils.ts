@@ -10,3 +10,7 @@ export function cn(...inputs: ClassValue[]) {
 export type Prettify<T> = {
     [K in keyof T]: T[K]
 } & {}
+
+// export type RequiredKeys<T> = {
+//     [K in keyof T]-?: {} extends Pick<T, K> ? never : K
+// }[keyof T]

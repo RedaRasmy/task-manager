@@ -5,7 +5,11 @@ export type List = {
     id: string
     name: string
     tasksIds: Task["id"][]
+    sortMode: SortMode
+    ascending: boolean
 }
+
+export type SortMode = "manual" | "name" | "priority"
 
 export type FullList = {
     id: string

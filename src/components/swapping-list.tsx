@@ -55,7 +55,7 @@ export default function SwappingList<Item extends { id: string | number }>({ ite
         const oldIndex = items.findIndex(item => item.id === active.id)
         const newIndex = items.findIndex(item => item.id === over.id)
 
-        if (oldIndex !== 1 && newIndex !== -1)
+        if (oldIndex !== -1 && newIndex !== -1)
             onReorder({ oldIndex, newIndex })
     }
 

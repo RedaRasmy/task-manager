@@ -1,4 +1,4 @@
-import { ArrowLeft, Ellipsis } from "lucide-react"
+import { ArrowLeft } from "lucide-react"
 
 import type { List } from "@/redux/types"
 
@@ -6,8 +6,10 @@ import RenamableHeading from "@/components/renamable-heading"
 import useCurrentList from "@/features/lists/hooks/use-current-list"
 import useList from "@/features/lists/hooks/use-list"
 
+import SortingDropdown from "./sorting-dropdown"
+
 export default function ListHeader({ listId }: { listId: List["id"] }) {
-    const { list, rename } = useList(listId)
+    const { list, rename, update } = useList(listId)
     const { reset } = useCurrentList()
 
     return (
@@ -17,7 +19,13 @@ export default function ListHeader({ listId }: { listId: List["id"] }) {
                 <RenamableHeading name={list.name} rename={rename} />
             </div>
             <div className="flex items-center gap-3">
-                <Ellipsis color="grey" className="cursor-pointer" />
+                <SortingDropdown
+                    sortMode={list.sortMode}
+                    ascending={list.ascending}
+                    onChangeSortMode={sortMode => update({ sortMode })}
+                    onChangeAscending={ascending => update({ ascending })}
+                />
+                {/* <Ellipsis color="grey" className="cursor-pointer" /> */}
             </div>
         </div>
     )

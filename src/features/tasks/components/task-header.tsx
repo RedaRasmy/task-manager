@@ -11,7 +11,6 @@ import PriorityDropdown from "./priority-dropdown"
 export default function TaskHeader({ taskId }: { taskId: Task["id"] }) {
     const { reset } = useCurrentTask()
     const { task, rename, update } = useTask(taskId)
-    console.log("taskId:", taskId)
 
     function handleChangePriority(newPriority: Priority) {
         update({ priority: newPriority })

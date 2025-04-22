@@ -11,8 +11,10 @@ export default function AddList() {
     const { createList } = useLists()
 
     function handleCreateList() {
-        name && createList(name)
-        setName("")
+        if (name.trim() !== "") {
+            createList(name)
+            setName("")
+        }
     }
 
     function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {

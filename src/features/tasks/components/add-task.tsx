@@ -12,11 +12,12 @@ export default function AddTask({ listId }: { listId: List["id"] }) {
     const [name, setName] = useState("")
 
     function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
-        if (event.key === "Enter" && name) {
+        if (event.key === "Enter" && name.trim() !== "") {
             createTask(name)
             setName("")
         }
     }
+
     return (
         <Input
             maxLength={25}

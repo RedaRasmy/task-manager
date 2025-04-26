@@ -16,7 +16,7 @@ export default function App() {
     return (
         <ResizablePanelGroup
             direction="horizontal"
-            className=" rounded-lg border "
+            className=""
         >
             <ResizablePanel
                 defaultSize={20}

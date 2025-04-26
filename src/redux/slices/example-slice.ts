@@ -1,11 +1,11 @@
 // import type { PayloadAction } from "@reduxjs/toolkit"
 import { createSlice } from "@reduxjs/toolkit"
 
-export type Example = {
+type Example = {
     value: number
 }
 
-const initialState = {
+const initialState: Example = {
     value: 0,
 }
 

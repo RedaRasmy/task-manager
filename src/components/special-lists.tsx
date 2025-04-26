@@ -1,0 +1,12 @@
+import { Archive, Calendar1 } from "lucide-react"
+
+import SpecialList from "./special-list"
+
+export default function SpecialLists() {
+    return (
+        <div className="flex flex-col w-full gap-2">
+            <SpecialList title="Today" Icon={Calendar1} />
+            <SpecialList title="All scheduled tasks" Icon={Archive} />
+        </div>
+    )
+}

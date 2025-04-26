@@ -1,6 +1,7 @@
 import type { PayloadAction } from "@reduxjs/toolkit"
 
-import { createEntityAdapter, createSlice } from "@reduxjs/toolkit"
+import { createEntityAdapter, createSelector, createSlice } from "@reduxjs/toolkit"
+import { isToday } from "date-fns"
 
 import type { RootState } from "../store"
 import type { Task } from "../types"
@@ -54,3 +55,10 @@ const tasksSelectors = tasksAdapter.getSelectors(selectTasks)
 
 export const selectTaskById = tasksSelectors.selectById
 export const selectTasksEntities = tasksSelectors.selectEntities
+
+export const selectTodaysTasks = createSelector(
+    [selectTasksEntities],
+    (tasks) => {
+        return Object.values(tasks).filter(task => task.date && isToday(task.date))
+    },
+)

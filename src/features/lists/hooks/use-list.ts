@@ -1,6 +1,6 @@
 import { v4 as uuid } from "uuid"
 
-import type { List, SwapParams, Task } from "@/redux/types"
+import type { ITask, List, SwapParams } from "@/redux/types"
 
 import useCurrentTask from "@/features/tasks/hooks/use-current-task"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
@@ -38,17 +38,17 @@ export default function useList(listId: List["id"]) {
         dispatch(listsActions.update({ id: listId, changes }))
     }
 
-    function createTask(name: Task["name"]) {
-        const task: Task = {
+    function createTask(task: ITask) {
+        dispatch(tasksActions.add({
             id: uuid(),
             listId,
             completed: false,
             description: "",
-            name,
+            name: task.name,
             tags: [],
-            priority: "normal",
-        }
-        dispatch(tasksActions.add(task))
+            priority: task.priority,
+            date: task.date,
+        }))
     }
 
     function swap(params: SwapParams) {

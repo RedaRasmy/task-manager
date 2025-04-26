@@ -2,6 +2,7 @@ import { ChevronsDown } from "lucide-react"
 
 import type { Priority, Task } from "@/redux/types"
 
+import { DatePicker } from "@/components/date-picker"
 import RenamableHeading from "@/components/renamable-heading"
 import useCurrentTask from "@/features/tasks/hooks/use-current-task"
 
@@ -15,11 +16,21 @@ export default function TaskHeader({ taskId }: { taskId: Task["id"] }) {
     function handleChangePriority(newPriority: Priority) {
         update({ priority: newPriority })
     }
+    function handleChangeDate(newDate: Date | undefined) {
+        update({ date: newDate ? newDate.toISOString() : undefined })
+    }
+
     return (
         <div className="flex items-center justify-between mb-2">
             <div className="flex justify-between items-center w-full pr-3">
                 <RenamableHeading name={task.name} rename={rename} className="" />
-                <PriorityDropdown priority={task.priority} change={handleChangePriority} />
+                <div className="flex items-center gap-1">
+                    <DatePicker
+                        date={task.date ? new Date(task.date) : undefined}
+                        onSelect={handleChangeDate}
+                    />
+                    <PriorityDropdown priority={task.priority} change={handleChangePriority} />
+                </div>
             </div>
             <ChevronsDown className="lg:hidden cursor-pointer" color="grey" onClick={reset} />
         </div>

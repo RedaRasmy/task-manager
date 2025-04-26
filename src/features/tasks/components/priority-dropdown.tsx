@@ -10,15 +10,23 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { cn } from "@/lib/utils"
 
-export default function PriorityDropdown({ priority, change }: {
+export default function PriorityDropdown({ priority, change, className }: {
     priority: Priority
     change: (newPriority: Priority) => void
+    className?: string
 }) {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger>
-                <Zap className="cursor-pointer" color="gray" />
+                <Zap
+                    className={cn("cursor-pointer", {
+                        "stroke-blue-500": priority === "medium",
+                        "stroke-yellow-500": priority === "high",
+                    }, className)}
+                    color="gray"
+                />
             </DropdownMenuTrigger>
             <DropdownMenuContent className="mr-4">
                 <DropdownMenuLabel>

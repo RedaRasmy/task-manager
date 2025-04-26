@@ -25,8 +25,14 @@ export type Task = {
     priority: Priority
     completed: boolean
     repeat?: number
-    date?: Date
+    date?: string
     tags: string[]
+}
+
+export type ITask = {
+    name: Task["name"]
+    priority: Task["priority"]
+    date?: Task["date"]
 }
 
 export type Priority = "normal" | "medium" | "high"

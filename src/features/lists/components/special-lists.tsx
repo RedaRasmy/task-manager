@@ -1,6 +1,6 @@
 import { Archive, Calendar1 } from "lucide-react"
 
-import SpecialList from "../features/lists/components/special-list"
+import SpecialList from "./special-list"
 
 export default function SpecialLists() {
     return (

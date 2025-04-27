@@ -4,13 +4,13 @@ import type { Priority, Task } from "@/redux/types"
 
 import { DatePicker } from "@/components/date-picker"
 import RenamableHeading from "@/components/renamable-heading"
-import useCurrentTask from "@/features/tasks/hooks/use-current-task"
+import useView from "@/hooks/use-view"
 
 import useTask from "../hooks/use-task"
 import PriorityDropdown from "./priority-dropdown"
 
 export default function TaskHeader({ taskId }: { taskId: Task["id"] }) {
-    const { reset } = useCurrentTask()
+    const { resetTask: reset } = useView()
     const { task, rename, update } = useTask(taskId)
 
     function handleChangePriority(newPriority: Priority) {

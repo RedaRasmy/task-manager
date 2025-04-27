@@ -1,13 +1,13 @@
-import useCurrentTask from "@/features/tasks/hooks/use-current-task"
+import useView from "@/hooks/use-view"
 
 import MiniTaskSection from "./mini-task-section"
 
 export default function TaskSectionContainer() {
-    const { currentTaskId } = useCurrentTask()
+    const { taskId } = useView()
 
-    if (currentTaskId) {
+    if (taskId) {
         return (
-            <MiniTaskSection taskId={currentTaskId} />
+            <MiniTaskSection taskId={taskId} />
         )
     }
 }

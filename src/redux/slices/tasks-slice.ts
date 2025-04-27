@@ -62,3 +62,10 @@ export const selectTodaysTasks = createSelector(
         return Object.values(tasks).filter(task => task.date && isToday(task.date))
     },
 )
+
+export const selectScheduledTasks = createSelector(
+    [selectTasksEntities],
+    (tasks) => {
+        return Object.values(tasks).filter(task => !!task.date)
+    },
+)

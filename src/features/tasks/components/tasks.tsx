@@ -1,11 +1,11 @@
-import type { List } from "@/redux/types"
-
 import SwappingList from "@/components/swapping-list"
 import useList from "@/features/lists/hooks/use-list"
+import useView from "@/hooks/use-view"
 
 import Task from "./task"
 
-export default function Tasks({ listId }: { listId: List["id"] }) {
+export default function Tasks() {
+    const { listId } = useView()
     const { tasks, swap, list } = useList(listId)
 
     if (list.sortMode === "manual") {

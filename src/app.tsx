@@ -7,11 +7,11 @@ import {
 import Sidebar from "./components/sidebar"
 import ThirdColumn from "./components/third-column"
 import ListSection from "./features/lists/components/list-section"
-import useCurrentList from "./features/lists/hooks/use-current-list"
+import useView from "./hooks/use-view"
 import { cn } from "./lib/utils"
 
 export default function App() {
-    const { currentListId } = useCurrentList()
+    const { isHome } = useView()
 
     return (
         <ResizablePanelGroup
@@ -23,7 +23,7 @@ export default function App() {
                 minSize={20}
                 maxSize={50}
                 className={cn("", {
-                    "hidden md:block": currentListId !== undefined,
+                    "hidden md:block": !isHome,
                 })}
             >
                 <Sidebar />
@@ -34,7 +34,7 @@ export default function App() {
                 minSize={30}
                 maxSize={50}
                 className={cn("", {
-                    "hidden md:flex": currentListId === undefined,
+                    "hidden md:flex": isHome,
                 })}
             >
                 <ListSection />

@@ -4,12 +4,12 @@ import { List as ListIcon, Trash } from "lucide-react"
 
 import type { List } from "@/redux/types"
 
-import useCurrentList from "@/features/lists/hooks/use-current-list"
 import useList from "@/features/lists/hooks/use-list"
+import useView from "@/hooks/use-view"
 
 export default function List({ list }: { list: List }) {
     const { remove } = useList(list.id)
-    const { change } = useCurrentList()
+    const { changeList: change } = useView()
 
     function handleClick() {
         change(list.id)

@@ -2,19 +2,27 @@ import type { KeyboardEvent } from "react"
 
 import { useState } from "react"
 
-import type { List, Priority } from "@/redux/types"
+import type { Priority } from "@/redux/types"
 
 import { DatePicker } from "@/components/date-picker"
 import { Input } from "@/components/ui/input"
 import useList from "@/features/lists/hooks/use-list"
+import useView from "@/hooks/use-view"
 
 import PriorityDropdown from "./priority-dropdown"
 
-export default function AddTask({ listId }: { listId: List["id"] }) {
-    const { createTask } = useList(listId)
+export default function AddTask() {
+    const { listId } = useView()
+    const { createTask, list } = useList(listId)
+
+    const isToday = list.id === "today"
+    const isScheduled = list.id === "scheduled"
+
+    const initialDate = isToday || isScheduled ? new Date() : undefined
+
     const [name, setName] = useState("")
     const [priority, setPriority] = useState<Priority>("normal")
-    const [date, setDate] = useState<Date>()
+    const [date, setDate] = useState<Date | undefined>(initialDate)
 
     function handleKeyDown(event: KeyboardEvent<HTMLInputElement>) {
         if (event.key === "Enter" && name.trim() !== "") {
@@ -25,7 +33,7 @@ export default function AddTask({ listId }: { listId: List["id"] }) {
             })
             setName("")
             setPriority("normal")
-            setDate(undefined)
+            setDate(initialDate)
         }
     }
 
@@ -42,7 +50,7 @@ export default function AddTask({ listId }: { listId: List["id"] }) {
                 onChange={e => setName(e.target.value)}
             />
             <DatePicker
-                date={date}
+                date={isToday ? new Date() : date}
                 onSelect={(newDate) => { setDate(newDate) }}
             />
             <PriorityDropdown

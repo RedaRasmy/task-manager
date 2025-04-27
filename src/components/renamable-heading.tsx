@@ -5,10 +5,11 @@ import { useOnClickOutside } from "usehooks-ts"
 
 import { cn } from "@/lib/utils"
 
-export default function RenamableHeading({ name, rename, className }: {
+export default function RenamableHeading({ name, rename, className, disabled = false }: {
     name: string
     rename: (newName: string) => void
     className?: string
+    disabled?: boolean
 }) {
     const [renaming, setRenaming] = useState(false)
     const inputRef = useRef<HTMLInputElement>(null)
@@ -53,7 +54,11 @@ export default function RenamableHeading({ name, rename, className }: {
     else {
         return (
             <h1
-                onClick={() => { setRenaming(true) }}
+                onClick={() => {
+                    if (!disabled) {
+                        setRenaming(true)
+                    }
+                }}
                 className={cn("font-bold text-xl cursor-pointer select-none capitalize hover:bg-accent rounded-sm px-3 py-0.5", className)}
             >
                 {name}

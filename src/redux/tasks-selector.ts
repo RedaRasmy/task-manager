@@ -22,7 +22,9 @@ export function selectSortedTasksForList({ listId, sortMode, ascending = true }:
 }) {
     return createSelector(
         [
-            (state: RootState) => state.lists.entities[listId]?.tasksIds || [],
+            (state: RootState) => state.lists.entities[listId]
+                ? state.lists.entities[listId].tasksIds
+                : state.specialLists.entities[listId].tasksIds,
             (state: RootState) => state.tasks.entities,
         ],
         (taskIds, tasksEntities) => {

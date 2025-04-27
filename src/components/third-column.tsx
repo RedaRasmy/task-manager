@@ -1,12 +1,12 @@
-import useCurrentTask from "@/features/tasks/hooks/use-current-task"
+import useView from "@/hooks/use-view"
 
 import TaskSection from "../features/tasks/components/task-section"
 
 export default function ThirdColumn() {
-    const { currentTaskId } = useCurrentTask()
+    const { taskId } = useView()
 
-    if (currentTaskId) {
-        return <TaskSection taskId={currentTaskId} />
+    if (taskId) {
+        return <TaskSection taskId={taskId} />
     }
 
     return (

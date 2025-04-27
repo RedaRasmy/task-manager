@@ -2,29 +2,30 @@ import { v4 as uuid } from "uuid"
 
 import type { ITask, List, SwapParams } from "@/redux/types"
 
-import useCurrentTask from "@/features/tasks/hooks/use-current-task"
+import useView from "@/hooks/use-view"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
-import { listsActions, selectListById } from "@/redux/slices/lists-slice"
+import { selectAnyListById } from "@/redux/list-selector"
+import { listsActions } from "@/redux/slices/lists-slice"
 import { tasksActions } from "@/redux/slices/tasks-slice"
 import { selectSortedTasksForList } from "@/redux/tasks-selector"
 
-import useCurrentList from "./use-current-list"
-
 export default function useList(listId: List["id"]) {
+    console.log("listId to select:", listId)
     const dispatch = useAppDispatch()
-    const list = useAppSelector(state => selectListById(state, listId))
-    const tasks = useAppSelector(selectSortedTasksForList({ listId, sortMode: list.sortMode, ascending: list.ascending }))
-    const { currentListId, change } = useCurrentList()
-    const { currentTaskId, change: changeTask } = useCurrentTask()
+    const list = useAppSelector(state => selectAnyListById(state, listId))
+    console.log("selected list : ", list)
 
-    if (!list)
-        throw new Error("List Undefined")
+    const tasks = useAppSelector(
+        selectSortedTasksForList({ listId, sortMode: list.sortMode, ascending: list.ascending }),
+    )
+
+    const { listId: currentListId, changeList, taskId, changeTask } = useView()
 
     function remove() {
         if (currentListId === listId) {
-            change(undefined)
+            changeList("today")
         }
-        if (currentTaskId && list.tasksIds.includes(currentTaskId)) {
+        if (taskId && list.tasksIds.includes(taskId)) {
             changeTask(undefined)
         }
         dispatch(listsActions.remove(listId))
@@ -54,10 +55,6 @@ export default function useList(listId: List["id"]) {
     function swap(params: SwapParams) {
         dispatch(listsActions.swapTasks({ listId, params }))
     }
-
-    // function removeAllTasks() {
-    //     dispatch(listsActions.)
-    // }
 
     return {
         list,

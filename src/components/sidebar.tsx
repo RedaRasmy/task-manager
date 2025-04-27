@@ -1,7 +1,7 @@
 import AddList from "@/features/lists/components/add-list"
+import SpecialLists from "@/features/lists/components/special-lists"
 
 import Lists from "../features/lists/components/lists"
-import SpecialLists from "./special-lists"
 import { Separator } from "./ui/separator"
 
 export default function Sidebar() {

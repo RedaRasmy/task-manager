@@ -70,7 +70,7 @@ export default function SwappingList<Item extends { id: string | number }>({ ite
             ]}
         >
             <SortableContext items={items} strategy={verticalListSortingStrategy}>
-                <div className={cn(" overflow-y-auto flex flex-col w-full flex-1", className)}>
+                <div className={cn(" overflow-y-auto mb-10 flex flex-col w-full flex-1", className)}>
                     {items.map(item => (
                         <SortableItem id={item.id.toString()} key={item.id}>
                             {renderItem(item)}

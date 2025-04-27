@@ -19,7 +19,7 @@ export default function Tasks() {
     }
     else {
         return (
-            <div className="overflow-y-auto flex flex-col w-full flex-1">
+            <div className="overflow-y-auto mb-10 flex flex-col w-full flex-1">
                 {tasks.map(task => <Task key={task.id} task={task} />)}
             </div>
         )

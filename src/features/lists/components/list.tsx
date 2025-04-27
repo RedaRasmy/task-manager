@@ -10,10 +10,11 @@ import { cn } from "@/lib/utils"
 
 export default function List({ list }: { list: List }) {
     const { remove } = useList(list.id)
-    const { changeList: change , listId } = useView()
+    const { changeList: change , listId , changeHome} = useView()
 
     function handleClick() {
         change(list.id)
+        changeHome(false)
     }
 
     function handleDelete(e: MouseEvent<SVGSVGElement>) {

@@ -50,8 +50,12 @@ export default function AddTask() {
                 onChange={e => setName(e.target.value)}
             />
             <DatePicker
-                date={isToday ? new Date() : date}
-                onSelect={(newDate) => { setDate(newDate) }}
+                date={date}
+                onSelect={(newDate) => {
+                    if ((isToday || isScheduled) && !newDate)
+                        return
+                    setDate(newDate)
+                }}
             />
             <PriorityDropdown
                 change={newPriority => setPriority(newPriority)}

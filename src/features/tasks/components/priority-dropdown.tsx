@@ -22,8 +22,8 @@ export default function PriorityDropdown({ priority, change, className }: {
             <DropdownMenuTrigger>
                 <Zap
                     className={cn("cursor-pointer", {
-                        "stroke-blue-500": priority === "medium",
-                        "stroke-yellow-500": priority === "high",
+                        "stroke-priority-medium": priority === "medium",
+                        "stroke-priority-high": priority === "high",
                     }, className)}
                     color="gray"
                 />
@@ -38,14 +38,14 @@ export default function PriorityDropdown({ priority, change, className }: {
                     onClick={() => change("high")}
                     className="cursor-pointer hover:bg-accent"
                 >
-                    <p className="text-yellow-500 font-semibold ">High</p>
+                    <p className="text-priority-high font-semibold ">High</p>
                 </DropdownMenuCheckboxItem>
                 <DropdownMenuCheckboxItem
                     checked={priority === "medium"}
                     onClick={() => change("medium")}
                     className="cursor-pointer hover:bg-accent"
                 >
-                    <p className="text-blue-500 font-semibold">Medium</p>
+                    <p className="text-priority-medium font-semibold">Medium</p>
                 </DropdownMenuCheckboxItem>
                 <DropdownMenuCheckboxItem
                     checked={priority === "normal"}

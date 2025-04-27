@@ -1,9 +1,12 @@
 // import type { PayloadAction } from "@reduxjs/toolkit"
+import type { PayloadAction } from "@reduxjs/toolkit"
+
+import { arrayMove } from "@dnd-kit/sortable"
 import { createEntityAdapter, createSlice } from "@reduxjs/toolkit"
 import { isToday } from "date-fns"
 
 import type { RootState } from "../store"
-import type { List } from "../types"
+import type { List, TasksSwapParams } from "../types"
 
 import { tasksActions } from "./tasks-slice"
 
@@ -44,7 +47,12 @@ const specialListsSlice = createSlice({
     name: "special-lists",
     initialState,
     reducers: {
-
+        swapTasks(state, action: PayloadAction<TasksSwapParams>) {
+            const { listId, params: { oldIndex, newIndex } } = action.payload
+            const tasksIds = state.entities[listId].tasksIds
+            state.entities[listId].tasksIds = arrayMove(tasksIds, oldIndex, newIndex)
+        },
+        update: adapter.updateOne,
     },
     extraReducers(builder) {
         builder
@@ -75,6 +83,24 @@ const specialListsSlice = createSlice({
                         if (state.entities.today) {
                             state.entities.today.tasksIds = todayTasksIds.filter(id => id !== task.id)
                         }
+                    }
+                }
+            })
+            .addCase(tasksActions.update, (state, action) => {
+                const { id: taskId, changes: { completed, listId } } = action.payload
+                if (!listId || !specialListsIds.includes(listId))
+                    return
+
+                if (completed !== undefined) {
+                    const list = state.entities[listId]
+                    if (!list)
+                        return
+                    const index = list.tasksIds.indexOf(taskId)
+                    if (completed) {
+                        list.tasksIds = [...list.tasksIds.slice(0, index), ...list.tasksIds.slice(index + 1), taskId]
+                    }
+                    else {
+                        list.tasksIds = [taskId, ...list.tasksIds.slice(0, index), ...list.tasksIds.slice(index + 1)]
                     }
                 }
             })

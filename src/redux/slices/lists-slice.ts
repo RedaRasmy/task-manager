@@ -6,6 +6,7 @@ import { createEntityAdapter, createSlice } from "@reduxjs/toolkit"
 import type { RootState } from "../store"
 import type { List, SwapParams, TasksSwapParams } from "../types"
 
+import { specialListsIds } from "./special-lists-slice"
 import { tasksActions } from "./tasks-slice"
 
 const listsAdapter = createEntityAdapter({
@@ -36,17 +37,23 @@ const listsSlice = createSlice({
         builder
             .addCase(tasksActions.add, (state, action) => {
                 const task = action.payload
+                if (specialListsIds.includes(task.listId))
+                    return
                 state.entities[task.listId].tasksIds.unshift(task.id)
             })
             .addCase(tasksActions.remove, (state, action) => {
                 const task = action.payload
+                if (specialListsIds.includes(task.listId))
+                    return
                 const tasksIds = state.entities[task.listId].tasksIds
                 state.entities[task.listId].tasksIds = tasksIds.filter(id => id !== task.id)
             })
             .addCase(tasksActions.update, (state, action) => {
                 const { id: taskId, changes: { completed, listId } } = action.payload
+                if (!listId || specialListsIds.includes(listId))
+                    return
 
-                if (completed !== undefined && listId !== undefined) {
+                if (completed !== undefined) {
                     const list = state.entities[listId]
                     if (!list)
                         return

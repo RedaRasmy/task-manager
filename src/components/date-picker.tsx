@@ -1,4 +1,4 @@
-import { format, isPast } from "date-fns"
+import { format, isBefore, startOfDay } from "date-fns"
 import { CalendarIcon } from "lucide-react"
 
 import { Calendar } from "@/components/ui/calendar"
@@ -28,7 +28,7 @@ export function DatePicker({ onSelect, date }: {
                     mode="single"
                     selected={date}
                     onSelect={(newDate) => {
-                        if (newDate === undefined || !isPast(newDate)) {
+                        if (newDate === undefined || !isBefore(newDate, startOfDay(new Date()))) {
                             onSelect(newDate)
                         }
                     }}

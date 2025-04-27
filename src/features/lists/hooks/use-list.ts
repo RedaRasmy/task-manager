@@ -6,14 +6,14 @@ import useView from "@/hooks/use-view"
 import { useAppDispatch, useAppSelector } from "@/redux/hooks"
 import { selectAnyListById } from "@/redux/list-selector"
 import { listsActions } from "@/redux/slices/lists-slice"
+import { specialListsActions, specialListsIds } from "@/redux/slices/special-lists-slice"
 import { tasksActions } from "@/redux/slices/tasks-slice"
 import { selectSortedTasksForList } from "@/redux/tasks-selector"
 
 export default function useList(listId: List["id"]) {
-    console.log("listId to select:", listId)
     const dispatch = useAppDispatch()
     const list = useAppSelector(state => selectAnyListById(state, listId))
-    console.log("selected list : ", list)
+    const isSpecial = specialListsIds.includes(listId)
 
     const tasks = useAppSelector(
         selectSortedTasksForList({ listId, sortMode: list.sortMode, ascending: list.ascending }),
@@ -36,7 +36,12 @@ export default function useList(listId: List["id"]) {
     }
 
     function update(changes: Partial<List>) {
-        dispatch(listsActions.update({ id: listId, changes }))
+        if (isSpecial) {
+            dispatch(specialListsActions.update({ id: listId, changes }))
+        }
+        else {
+            dispatch(listsActions.update({ id: listId, changes }))
+        }
     }
 
     function createTask(task: ITask) {
@@ -53,7 +58,12 @@ export default function useList(listId: List["id"]) {
     }
 
     function swap(params: SwapParams) {
-        dispatch(listsActions.swapTasks({ listId, params }))
+        if (isSpecial) {
+            dispatch(specialListsActions.swapTasks({ listId, params }))
+        }
+        else {
+            dispatch(listsActions.swapTasks({ listId, params }))
+        }
     }
 
     return {

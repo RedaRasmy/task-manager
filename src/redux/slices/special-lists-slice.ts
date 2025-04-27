@@ -14,27 +14,7 @@ const adapter = createEntityAdapter({
     selectId: (list: List) => list.id,
 })
 
-const emptyState = adapter.getInitialState(
-//     {
-//     entities : {
-//         today : {
-//             id : 'today',
-//             name : 'Today',
-//             ascending : true,
-//             sortMode : 'manual',
-//             tasksIds : [] as string[]
-//         },
-//         scheduled : {
-//             id : 'scheduled',
-//             name : 'Scheduled',
-//             ascending : true,
-//             sortMode : 'manual',
-//             tasksIds : [] as string[]
-//         },
-//     },
-//     ids : ['today','scheduled']
-// }
-)
+const emptyState = adapter.getInitialState()
 
 export const specialListsIds = ["today", "scheduled"]
 
@@ -78,8 +58,8 @@ const specialListsSlice = createSlice({
                     const tasksIds = state.entities.scheduled.tasksIds
                     state.entities.scheduled.tasksIds = tasksIds.filter(id => id !== task.id)
 
-                    if (isToday(task.date)) {
-                        const todayTasksIds = state.entities.today?.tasksIds
+                    if (isToday(new Date(task.date))) {
+                        const todayTasksIds = state.entities.today.tasksIds
                         if (state.entities.today) {
                             state.entities.today.tasksIds = todayTasksIds.filter(id => id !== task.id)
                         }

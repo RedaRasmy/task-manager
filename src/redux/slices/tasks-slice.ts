@@ -1,7 +1,7 @@
 import type { PayloadAction } from "@reduxjs/toolkit"
 
 import { createEntityAdapter, createSelector, createSlice } from "@reduxjs/toolkit"
-import { isToday } from "date-fns"
+import { isPast, isToday, startOfDay } from "date-fns"
 
 import type { RootState } from "../store"
 import type { Task } from "../types"
@@ -28,6 +28,15 @@ const tasksSlice = createSlice({
             state.ids = state.ids.filter(taskId => taskId !== task.id)
         },
         update: tasksAdapter.updateOne,
+        updateOverdueTasks : (state) => {
+            const today = startOfDay(new Date())
+
+            Object.values(state.entities).forEach((task)=>{
+                if (task.date && isPast(task.date)) {
+                    task.date = today.toISOString()
+                }
+            })
+        }
     },
     extraReducers(builder) {
         builder

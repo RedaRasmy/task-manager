@@ -9,9 +9,12 @@ import ThirdColumn from "./components/third-column"
 import ListSection from "./features/lists/components/list-section"
 import useView from "./hooks/use-view"
 import { cn } from "./lib/utils"
+import useAutoUpdateOverdueTasks from "./features/tasks/hooks/use-auto-update-overdue-tasks"
 
 export default function App() {
     const { isHome } = useView()
+    
+    useAutoUpdateOverdueTasks()
 
     return (
         <ResizablePanelGroup

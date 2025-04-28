@@ -20,7 +20,7 @@ export default function SpecialList({ id, Icon }: {
         <div
             onClick={handleClick}
             className={cn("flex cursor-pointer items-center gap-2 hover:bg-accent border rounded-md py-2 px-2",{
-                'bg-accent' : list.id === listId
+                'md:bg-accent' : list.id === listId
             })}
         >
             <Icon />

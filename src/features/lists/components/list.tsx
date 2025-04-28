@@ -27,7 +27,7 @@ export default function List({ list }: { list: List }) {
             data-testid="list"
             onClick={handleClick}
             className={cn("border m-1 px-1 py-1 rounded-md items-center grid grid-cols-[40px_auto_30px] cursor-pointer",{
-                'bg-accent' : listId === list.id
+                'md:bg-accent' : listId === list.id
             })}
         >
             <ListIcon />

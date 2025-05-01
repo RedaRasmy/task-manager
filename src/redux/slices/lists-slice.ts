@@ -38,7 +38,7 @@ const listsSlice = createSlice({
             .addCase(tasksActions.add, (state, action) => {
                 const task = action.payload
                 if (specialListsIds.includes(task.listId))
-                    return
+                    return;
                 state.entities[task.listId].tasksIds.unshift(task.id)
             })
             .addCase(tasksActions.remove, (state, action) => {

@@ -20,9 +20,6 @@ const tasksSlice = createSlice({
             state.entities[task.id] = task
             state.ids.unshift(task.id)
         },
-
-        // remove : tasksAdapter.removeOne,
-        removeAll: tasksAdapter.removeAll,
         remove(state, { payload: task }: PayloadAction<Task>) {
             delete state.entities[task.id]
             state.ids = state.ids.filter(taskId => taskId !== task.id)

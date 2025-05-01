@@ -79,3 +79,4 @@ export const listsSelectors = listsAdapter.getSelectors<RootState>(state => stat
 
 export const selectAllLists = listsSelectors.selectAll
 export const selectListById = listsSelectors.selectById
+

@@ -8,11 +8,16 @@ import { selectAnyListById } from "@/redux/list-selector"
 import { listsActions } from "@/redux/slices/lists-slice"
 import { specialListsActions, specialListsIds } from "@/redux/slices/special-lists-slice"
 import { tasksActions } from "@/redux/slices/tasks-slice"
+import { selectSortedTasksForList } from "@/redux/tasks-selector"
 
-export default function useList(listId: List["id"]) {
+export default function useFullList(listId: List["id"]) {
     const dispatch = useAppDispatch()
     const list = useAppSelector(state => selectAnyListById(state, listId))
     const isSpecial = specialListsIds.includes(listId)
+
+    const tasks = useAppSelector(
+        selectSortedTasksForList({ listId, sortMode: list.sortMode, ascending: list.ascending }),
+    )
 
     const { listId: currentListId, changeList, taskId, changeTask } = useView()
 
@@ -63,6 +68,7 @@ export default function useList(listId: List["id"]) {
 
     return {
         list,
+        tasks,
         remove,
         rename,
         createTask,

@@ -8,9 +8,8 @@ import { specialListsIds } from "@/redux/slices/special-lists-slice"
 import SortingDropdown from "./sorting-dropdown"
 
 export default function ListHeader() {
-    const { listId } = useView()
+    const { resetHome: reset , listId} = useView()
     const { list, rename, update } = useList(listId)
-    const { resetHome: reset } = useView()
 
     return (
         <div className="flex justify-between items-center ">

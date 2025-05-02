@@ -2,69 +2,58 @@ import { describe, expect, it } from "vitest"
 
 import listsReducer, { listsActions } from "@/redux/slices/lists-slice"
 
-import type { List } from "../types"
-
-// helpers
-const listExample: List = { id: "listId", name: "My List", tasksIds: ['task1','task2'], ascending: true, sortMode: "manual" }
-const listExample2: List = { id: "listId2", name: "My List2", tasksIds: ['task3','task4'], ascending: true, sortMode: "manual" }
-const emptyState = { ids: [], entities: {} }
-const stateWithList = { ids: ["listId"], entities: { listId: listExample } }
-const stateWith2Lists = {ids:['listId','listId2'],entities:{listId:listExample,listId2:listExample2}}
-
-// tests
+import { emptyState, list1, list2, stateWithLists } from "./data"
 
 describe("lists slice", () => {
     it("should add a new list", () => {
-        const result = listsReducer(emptyState, listsActions.add(listExample))
+        const result = listsReducer(emptyState, listsActions.add(list1))
 
-        expect(result.ids).toContain("listId")
-        expect(result.entities.listId).toEqual(listExample)
+        expect(result.ids).toContain("listId1")
+        expect(result.entities.listId1).toEqual(list1)
     })
     it("should remove a list", () => {
-        const result = listsReducer(stateWithList, listsActions.remove(listExample.id))
+        const result = listsReducer(stateWithLists, listsActions.remove(list1.id))
+        const finalResult = listsReducer(result, listsActions.remove(list2.id))
 
-        expect(result).toEqual(emptyState)
+        expect(finalResult).toEqual(emptyState)
     })
     it("should update a list", () => {
-        const result = listsReducer(stateWithList, listsActions.update({
-            id: "listId",
+        const result = listsReducer(stateWithLists, listsActions.update({
+            id: "listId1",
             changes: {
                 sortMode: "priority",
                 ascending: false,
             },
         }))
-        expect(result.entities.listId).toEqual({ ...listExample , ascending: false, sortMode: "priority" })
-        expect(result.ids).toEqual(stateWithList.ids)
+        expect(result.entities.listId1).toEqual({ ...list1, ascending: false, sortMode: "priority" })
+        expect(result.ids).toEqual(stateWithLists.ids)
     })
-    it('should swap lists' , () => {
-        const result = listsReducer(stateWith2Lists, listsActions.swapLists({
-            oldIndex : 0,
-            newIndex : 1
+    it("should swap lists", () => {
+        const result = listsReducer(stateWithLists, listsActions.swapLists({
+            oldIndex: 0,
+            newIndex: 1,
         }))
 
-        expect(result.ids[0]).toEqual('listId2')
+        expect(result.ids[0]).toEqual("listId2")
 
-        const result2 = listsReducer(stateWith2Lists, listsActions.swapLists({
-            oldIndex : 0,
-            newIndex : 0
+        const result2 = listsReducer(stateWithLists, listsActions.swapLists({
+            oldIndex: 0,
+            newIndex: 0,
         }))
 
-        expect(result2).toEqual(stateWith2Lists)
+        expect(result2).toEqual(stateWithLists)
     })
 
-
-
-    it('should swap tasks ids' , () => {
-        const result = listsReducer(stateWith2Lists, listsActions.swapTasks({
-            listId : 'listId2',
-            params : {
-                oldIndex : 0 , 
-                newIndex : 1
-            }
+    it("should swap tasks ids", () => {
+        const result = listsReducer(stateWithLists, listsActions.swapTasks({
+            listId: "listId2",
+            params: {
+                oldIndex: 0,
+                newIndex: 1,
+            },
         }))
-        expect(result.entities.listId2.tasksIds).toEqual(['task4','task3'])
+        expect(result.entities.listId2.tasksIds).toEqual(["taskId4", "taskId3"])
     })
 
     // extra reducers :
-
 })

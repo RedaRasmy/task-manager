@@ -2,35 +2,11 @@ import type { EntityState } from "@reduxjs/toolkit"
 
 import { beforeEach, describe, expect, it } from "vitest"
 
-import type { List, Task } from "../types"
+import type { List } from "../types"
 
 import listsReducer, { listsActions } from "../slices/lists-slice"
 import tasksReducer, { tasksActions } from "../slices/tasks-slice"
-
-const task: Task = {
-    id: "taskId",
-    completed: false,
-    description: "hello world",
-    listId: "listId",
-    name: "task",
-    priority: "normal",
-    tags: [],
-}
-// const task2: Task = {
-//     id: "taskId2",
-//     completed: false,
-//     description: "hello world 2",
-//     listId: "listId",
-//     name: "task2",
-//     priority: "high",
-//     tags: [],
-// }
-
-const emptyState = { ids: [], entities: {} }
-const stateWithTask = { ids: ["taskId"], entities: { taskId: task } }
-// const stateWithTasks = { ids: ["taskId","taskId2"], entities: { taskId: task , taskId2 : task2 } }
-const list: List = { id: "listId", name: "My List", tasksIds: [], ascending: true, sortMode: "manual" }
-
+import { emptyList, emptyState, stateWithTasks, task1 } from "./data"
 
 
 describe("tasks slice", () => {
@@ -38,37 +14,39 @@ describe("tasks slice", () => {
 
     beforeEach(() => {
         // Create a list before each test
-        listState = listsReducer(emptyState, listsActions.add(list))
+        listState = listsReducer(emptyState, listsActions.add(emptyList))
     })
 
     it("should add task then add taskId in the list.tasksIds", () => {
-        const addAction = tasksActions.add(task)
+        const addAction = tasksActions.add(task1)
 
         const tasksState = tasksReducer(emptyState, addAction)
         listState = listsReducer(listState, addAction)
 
-        expect(tasksState).toEqual(stateWithTask)
-        expect(listState.entities.listId.tasksIds).toEqual(["taskId"])
+        expect(tasksState.entities.taskId1).toEqual(task1)
+        expect(tasksState.ids).toContain('taskId1')
+        expect(listState.entities.listId.tasksIds).toEqual(["taskId1"])
     })
 
     it("should remove a task then remove taskId from the list.tasksIds", () => {
-        const removeAction = tasksActions.remove(task)
+        const removeAction = tasksActions.remove(task1)
 
-        const tasksState = tasksReducer(stateWithTask, removeAction)
+        const tasksState = tasksReducer(stateWithTasks, removeAction)
         listState = listsReducer(listState, removeAction)
 
-        expect(tasksState).toEqual(emptyState)
+        expect(tasksState.ids.length).toEqual(1)
+        expect(tasksState.entities.taskId1).toBeUndefined()
         expect(listState.entities.listId.tasksIds).toEqual([])
     })
 
     it("should update a task description", () => {
-        const tasksState = tasksReducer(stateWithTask, tasksActions.update({
-            id: "taskId",
+        const tasksState = tasksReducer(stateWithTasks, tasksActions.update({
+            id: "taskId1",
             changes: {
                 description: "hello",
             },
         }))
-        expect(tasksState.entities.taskId.description).toEqual("hello")
+        expect(tasksState.entities.taskId1.description).toEqual("hello")
     })
 
     // it('should complete a task and taskId in the list.tasksIds be the last one' , () => {

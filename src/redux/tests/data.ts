@@ -46,5 +46,3 @@ export const stateWithLists = { ids: ["listId1", "listId2"],
     } }
 
 
-// const stateWithTasks = { ids: ["taskId","taskId2"], entities: { taskId: task , taskId2 : task2 } }
-// const list: List = { id: "listId", name: "My List", tasksIds: [], ascending: true, sortMode: "manual" }

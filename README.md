@@ -33,6 +33,6 @@ Organize your work with **lists and tasks**, enjoy **drag and drop**, **resizabl
 ```bash
 git clone https://github.com/RedaRasmy/task-manager.git
 cd task-manager
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
